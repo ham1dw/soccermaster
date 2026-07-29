@@ -1,0 +1,64 @@
+@model soccer.Models.UpcomingMatch
+@{
+    ViewData["Title"] = "Novbeti Matci Redakte Et";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-calendar mr-2"></i>Novbeti Matci Redakte Et</h1>
+</div>
+
+<div class="card">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="id" />
+        <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Team1" class="form-label"></label>
+                        <input asp-for="Team1" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Team2" class="form-label"></label>
+                        <input asp-for="Team2" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Date" class="form-label"></label>
+                        <input asp-for="Date" type="date" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Location" class="form-label"></label>
+                        <input asp-for="Location" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="League" class="form-label"></label>
+                        <input asp-for="League" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Team 1 Loqo</label>
+                        <input type="file" name="team1Logo" class="form-control" accept="image/*" />
+                        @if (!string.IsNullOrEmpty(Model.Team1LogoUrl))
+                        {
+                            <img src="@Model.Team1LogoUrl" class="thumb-sm mt-2" />
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label>Team 2 Loqo</label>
+                        <input type="file" name="team2Logo" class="form-control" accept="image/*" />
+                        @if (!string.IsNullOrEmpty(Model.Team2LogoUrl))
+                        {
+                            <img src="@Model.Team2LogoUrl" class="thumb-sm mt-2" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <a asp-action="Index" class="btn btn-outline-secondary">Legv et</a>
+            <button type="submit" class="btn btn-primary">Yadda saxla</button>
+        </div>
+    </form>
+</div>

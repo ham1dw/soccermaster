@@ -30,7 +30,7 @@
     <div class="d-flex team-vs justify-content-center align-items-center">
         <div class="team-1 w-50">
             <div class="team-details w-100 text-center">
-                <img src="~/images/logo_1.png" alt="Image" class="img-fluid">
+                <img src="@(match != null ? match.Team1LogoUrl : "")" alt="Image">
                 <h3>@homeTeam <span>(@match.HomeResult)</span></h3>
                 <ul class="list-unstyled">
                     @if (IsValidPlayer(match.HomePlayer1)) { <li>@match.HomePlayer1</li> }
@@ -43,7 +43,7 @@
         <span class="score mx-4 fs-3">@match.HomeScore - @match.AwayScore</span>
         <div class="team-2 w-50">
             <div class="team-details w-100 text-center">
-                <img src="~/images/logo_2.png" alt="Image" class="img-fluid">
+                <img src="@(match != null ? match.Team2LogoUrl : "")" alt="Image">
                 <h3>@awayTeam <span>(@match.AwayResult)</span></h3>
                 <ul class="list-unstyled">
                     @if (IsValidPlayer(match.AwayPlayer1)) { <li>@match.AwayPlayer1</li> }

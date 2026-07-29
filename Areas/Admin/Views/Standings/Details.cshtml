@@ -1,0 +1,32 @@
+@model soccer.Models.Standing
+@{
+    ViewData["Title"] = "Siralama Detallari";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-list mr-2"></i>Siralama Detallari</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-3">Yer</dt>
+            <dd class="col-9">@Model.Position</dd>
+            <dt class="col-3">Komanda</dt>
+            <dd class="col-9">@Model.TeamName</dd>
+            <dt class="col-3">Qalib (W)</dt>
+            <dd class="col-9">@Model.W</dd>
+            <dt class="col-3">Hec-hece (D)</dt>
+            <dd class="col-9">@Model.D</dd>
+            <dt class="col-3">Meglub (L)</dt>
+            <dd class="col-9">@Model.L</dd>
+            <dt class="col-3">Xal</dt>
+            <dd class="col-9">@Model.Points</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-right">
+        <a asp-action="Index" class="btn btn-outline-secondary">Geri</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Redakte et</a>
+    </div>
+</div>

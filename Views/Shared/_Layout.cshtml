@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<soccer.Models.AppUser> SignInManager
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>Soccer &mdash; Website by Colorlib</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
@@ -14,7 +15,6 @@
     <link rel="stylesheet" href="~/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="~/css/jquery-ui.css">
     <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
 
     <link rel="stylesheet" href="~/css/jquery.fancybox.min.css">
@@ -27,8 +27,16 @@
 
     <link rel="stylesheet" href="~/css/style.css">
 
+    <style>
+            #authTabs .nav-link.active {
+                background-color: #e62222 !important;
+                color: #fff !important;
+            }
 
-
+            .modal-backdrop.show {
+                opacity: 0.75;
+            }
+    </style>
 </head>
 
 <body>
@@ -44,7 +52,6 @@
             <div class="site-mobile-menu-body"></div>
         </div>
 
-
         <header class="site-navbar py-4" role="banner">
 
             <div class="container">
@@ -59,9 +66,29 @@
                             <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                                 <li class="active"><a asp-action="Index" asp-controller="Home" class="nav-link">Home</a></li>
                                 <li><a asp-action="Index" asp-controller="Matches" class="nav-link">Matches</a></li>
-                                <li><a asp-action="Index" asp-controller="Players" cl   ass="nav-link">Players</a></li>
+                                <li><a asp-action="Index" asp-controller="Players" class="nav-link">Players</a></li>
                                 <li><a asp-action="Blog" asp-controller="Blog" class="nav-link">Blog</a></li>
                                 <li><a asp-action="Index" asp-controller="Contact" class="nav-link">Contact</a></li>
+                                
+
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <li class="d-inline-block ml-3">
+                                        <span class="text-white mr-2 font-weight-bold" style="color: #e62222 !important;">👤 @User.Identity.Name</span>
+                                        <a href="/Account/Logout" class="btn btn-sm btn-outline-danger">Cixis</a>
+                                    </li>
+                                    <li class="d-inline-block ml-2">
+                                        <a asp-controller="Blog" asp-action="Blog" class="btn btn-sm btn-danger px-3 py-2 font-weight-bold">Bilet Al</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="d-inline-block ml-3">
+                                        <button type="button" class="btn btn-sm text-white font-weight-bold px-3 py-2" data-toggle="modal" data-target="#authModal" style="background-color: #e62222; border-radius: 4px;">
+                                            GIRIS YAP / QEYDIYYAT
+                                        </button>
+                                    </li>
+                                }
                             </ul>
                         </nav>
 
@@ -74,11 +101,7 @@
 
         </header>
 
-
-    
-    @RenderBody()
-
-
+        @RenderBody()
 
         <footer class="footer-section">
             <div class="container">
@@ -87,7 +110,7 @@
                         <div class="widget mb-3">
                             <h3>News</h3>
                             <ul class="list-unstyled links">
-                                <li><a href="#">All</a></li>    
+                                <li><a href="#">All</a></li>
                                 <li><a href="#">Club News</a></li>
                                 <li><a href="#">Media Center</a></li>
                                 <li><a href="#">Video</a></li>
@@ -138,13 +161,10 @@
                     <div class="col-md-12">
                         <div class=" pt-5">
                             <p>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 Copyright &copy;
                                 <script>
                                                                     document.write(new Date().getFullYear());
-                                </script> All rights reserved | This template is made with <i class="icon-heart"
-                                                                                              aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                             </p>
                         </div>
                     </div>
@@ -153,11 +173,122 @@
             </div>
         </footer>
 
-
-
     </div>
-    <!-- .site-wrap -->
 
+    
+    <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: #1a1e24; border: 1px solid #333; border-radius: 10px; color: #fff;">
+                
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" style="opacity: 0.8; font-size: 28px; outline: none;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body px-4 pb-4 pt-0">
+                    @if (TempData["AuthError"] != null)
+                    {
+                        <div class="alert alert-danger text-center p-2 small font-weight-bold mb-3" style="border-radius: 5px;">
+                            ⚠️ @TempData["AuthError"]
+                        </div>
+                    }
+
+                    <div class="text-center mb-4">
+                        <h3 class="font-weight-bold" style="color: #e62222; letter-spacing: 2px;">SOCCER</h3>
+                
+                        <ul class="nav nav-pills nav-justified mt-3" id="authTabs" role="tablist" style="background: #111418; border-radius: 6px; padding: 4px;">
+                            <li class="nav-item">
+                                <a class="nav-link active text-white font-weight-bold py-2" id="modal-login-tab" data-toggle="pill" href="#modal-login-content" role="tab" style="border-radius: 4px; font-size: 14px;">DAXIL OL</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white font-weight-bold py-2" id="modal-register-tab" data-toggle="pill" href="#modal-register-content" role="tab" style="border-radius: 4px; font-size: 14px;">QEYDIYYAT</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content">
+                        
+                        
+                        <div class="tab-pane fade show active" id="modal-login-content" role="tabpanel">
+                            <form id="siteLoginForm" asp-controller="Account" asp-action="Login" method="post">
+                                @Html.AntiForgeryToken()
+                                @Html.AntiForgeryToken()
+                                <div class="form-group mb-3">
+                                    <label class="small text-muted font-weight-bold mb-1">Email</label>
+                                    <input type="email" name="Email" class="form-control text-white" placeholder="example@mail.com" style="background: #111418; border: 1px solid #2e353d; height: 45px;" required />
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="small text-muted font-weight-bold mb-1">Sifre</label>
+                                    <input type="password" name="Password" class="form-control text-white" placeholder="******" style="background: #111418; border: 1px solid #2e353d; height: 45px;" required />
+                                </div>
+                                <button type="submit" class="btn btn-block font-weight-bold text-white py-2 mt-4" style="background-color: #e62222; border-radius: 5px;">GIRIS YAP</button>
+                            </form>
+                            <script>
+                                (function(){
+                                    // Use AJAX submit to ensure form fields are sent even if modal markup interferes
+                                    var form = document.getElementById('siteLoginForm');
+                                    if (!form) return;
+                                    form.addEventListener('submit', async function (e) {
+                                        e.preventDefault();
+                                        var fd = new FormData(form);
+                                        var tokenEl = form.querySelector('input[name="__RequestVerificationToken"]');
+                                        var headers = {};
+                                        if (tokenEl) headers['RequestVerificationToken'] = tokenEl.value;
+                                        try {
+                                            var res = await fetch(form.action, {
+                                                method: 'POST',
+                                                headers: headers,
+                                                body: fd,
+                                                credentials: 'same-origin'
+                                            });
+                                            if (res.redirected) {
+                                                window.location.href = res.url;
+                                                return;
+                                            }
+                                            var text = await res.text();
+                                            // replace body with response to show validation errors or redirect results
+                                            document.open(); document.write(text); document.close();
+                                        } catch (err) {
+                                            console.error('Login submit failed', err);
+                                        }
+                                    });
+                                })();
+                            </script>
+                        </div>
+
+                       
+                        <div class="tab-pane fade" id="modal-register-content" role="tabpanel">
+                            <form asp-controller="Account" asp-action="Register" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="form-group mb-2">
+                                    <label class="small text-muted font-weight-bold mb-1">Full Name</label>
+                                    <input type="text" name="FullName" class="form-control text-white" placeholder="John Doe" style="background: #111418; border: 1px solid #2e353d; height: 42px;" required />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="small text-muted font-weight-bold mb-1">Email</label>
+                                    <input type="email" name="Email" class="form-control text-white" placeholder="example@mail.com" style="background: #111418; border: 1px solid #2e353d; height: 42px;" required />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="small text-muted font-weight-bold mb-1">Password</label>
+                                    <input type="password" name="Password" class="form-control text-white" placeholder="******" style="background: #111418; border: 1px solid #2e353d; height: 42px;" required />
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="small text-muted font-weight-bold mb-1">Confirm Password</label>
+                                    <input type="password" name="ConfirmPassword" class="form-control text-white" placeholder="******" style="background: #111418; border: 1px solid #2e353d; height: 42px;" required />
+                                </div>
+                                <button type="submit" class="btn btn-block font-weight-bold text-white py-2 mt-3" style="background-color: #e62222; border-radius: 5px;">KAYIT OL</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="~/js/jquery-ui.js"></script>
@@ -173,8 +304,17 @@
     <script src="~/js/jquery.sticky.js"></script>
     <script src="~/js/jquery.mb.YTPlayer.min.js"></script>
 
-
     <script src="~/js/main.js"></script>
+
+   
+    @if (TempData["AuthError"] != null)
+    {
+        <script>
+                $(document).ready(function () {
+                    $('#authModal').modal('show');
+                });
+        </script>
+    }
 
 </body>
 

@@ -1,0 +1,67 @@
+@model IEnumerable<soccer.Models.TicketOrder>
+@{
+    ViewData["Title"] = "Bilet Sifarisleri";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-tag mr-2"></i>Bilet Sifarisleri</h1>
+    <div class="page-options d-flex">
+        <a asp-action="ExportCsv" class="btn btn-outline-primary"><i class="fe fe-download mr-1"></i> CSV Export</a>
+    </div>
+</div>
+
+<div class="card">
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fe fe-tag"></i>
+            <p>Hele hec bir bilet sifarisi yoxdur.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter table-striped">
+                <thead>
+                    <tr>
+                        <th class="w-1">#</th>
+                        <th>Matc</th>
+                        <th>Alici</th>
+                        <th>Say</th>
+                        <th>Mebleg</th>
+                        <th>Status</th>
+                        <th>Tarix</th>
+                        <th class="text-right">Emeliyyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var t in Model)
+                {
+                    <tr>
+                        <td class="text-muted">@t.Id</td>
+                        <td>@t.MatchName</td>
+                        <td>@t.FullName</td>
+                        <td>@t.TicketCount</td>
+                        <td>@t.TotalAmount AZN</td>
+                        <td>
+                            @if (t.IsPaid)
+                            {
+                                <span class="status-icon bg-success"></span> <text>Odenilib</text>
+                            }
+                            else
+                            {
+                                <span class="status-icon bg-warning"></span> <text>Gozlemede</text>
+                            }
+                        </td>
+                        <td>@t.CreatedAt.ToString("yyyy-MM-dd")</td>
+                        <td class="text-right">
+                            <a asp-action="Details" asp-route-id="@t.Id" class="btn btn-sm btn-outline-secondary"><i class="fe fe-eye"></i> Etrafli</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,28 @@
+@model soccer.Models.Match
+@{
+    ViewData["Title"] = "Matci sil";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title text-danger"><i class="fe fe-alert-triangle mr-2"></i>Matci Sil</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <p class="text-muted">Bu matci silmek istediyinize eminsiniz? Bu emeliyyat geri qaytarila bilmez.</p>
+        <dl class="row">
+            <dt class="col-3">Ev sahibi</dt>
+            <dd class="col-9">@Model.HomeTeam (@Model.HomeScore)</dd>
+            <dt class="col-3">Qonaq</dt>
+            <dd class="col-9">@Model.AwayTeam (@Model.AwayScore)</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-right">
+        <form asp-action="Delete" method="post" class="d-inline">
+            <input type="hidden" asp-for="Id" />
+            <a asp-action="Index" class="btn btn-outline-secondary">Legv et</a>
+            <button type="submit" class="btn btn-danger">Beli, sil</button>
+        </form>
+    </div>
+</div>

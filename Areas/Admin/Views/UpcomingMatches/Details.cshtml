@@ -1,0 +1,43 @@
+@model soccer.Models.UpcomingMatch
+@{
+    ViewData["Title"] = "Novbeti Matc Detallari";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-calendar mr-2"></i>Novbeti Matc Detallari</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center mb-3">
+            <div class="col-auto text-center">
+                @if (!string.IsNullOrEmpty(Model.Team1LogoUrl))
+                {
+                    <img src="@Model.Team1LogoUrl" style="width:50px;height:50px;object-fit:contain;" />
+                }
+                <div>@Model.Team1</div>
+            </div>
+            <div class="col-auto">vs</div>
+            <div class="col-auto text-center">
+                @if (!string.IsNullOrEmpty(Model.Team2LogoUrl))
+                {
+                    <img src="@Model.Team2LogoUrl" style="width:50px;height:50px;object-fit:contain;" />
+                }
+                <div>@Model.Team2</div>
+            </div>
+        </div>
+        <dl class="row">
+            <dt class="col-3">Tarix</dt>
+            <dd class="col-9">@Model.Date.ToString("yyyy-MM-dd HH:mm")</dd>
+            <dt class="col-3">Yer</dt>
+            <dd class="col-9">@Model.Location</dd>
+            <dt class="col-3">Liqa</dt>
+            <dd class="col-9">@Model.League</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-right">
+        <a asp-action="Index" class="btn btn-outline-secondary">Geri</a>
+        <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-primary">Redakte et</a>
+    </div>
+</div>

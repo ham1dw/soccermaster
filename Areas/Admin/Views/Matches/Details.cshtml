@@ -1,0 +1,31 @@
+@model soccer.Models.Match
+@{
+    ViewData["Title"] = "Matc Detallari";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-check-square mr-2"></i>Matc Detallari</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-3">Ev sahibi</dt>
+            <dd class="col-9">@Model.HomeTeam (@Model.HomeScore)</dd>
+
+            <dt class="col-3">Qonaq</dt>
+            <dd class="col-9">@Model.AwayTeam (@Model.AwayScore)</dd>
+
+            <dt class="col-3">Ev sahibi oyuncular</dt>
+            <dd class="col-9">@Model.HomePlayer1, @Model.HomePlayer2, @Model.HomePlayer3, @Model.HomePlayer4</dd>
+
+            <dt class="col-3">Qonaq oyuncular</dt>
+            <dd class="col-9">@Model.AwayPlayer1, @Model.AwayPlayer2, @Model.AwayPlayer3, @Model.AwayPlayer4</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-right">
+        <a asp-action="Index" class="btn btn-outline-secondary">Geri</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Redakte et</a>
+    </div>
+</div>

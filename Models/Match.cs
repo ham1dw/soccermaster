@@ -19,6 +19,10 @@
         public string AwayPlayer2 { get; set; }
         public string AwayPlayer3 { get; set; }
         public string AwayPlayer4 { get; set; }
+
+        public string Team1LogoUrl { get; set; }
+
+        public string Team2LogoUrl { get; set; }
     }
 
 }

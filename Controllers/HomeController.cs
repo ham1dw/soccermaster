@@ -22,6 +22,8 @@ namespace soccer.Controllers
             var hero = await _context.HeroSections.FirstOrDefaultAsync();
             var matches = await _context.Matches.AsNoTracking().ToListAsync();
 
+
+
             matches = matches
                 .GroupBy(m => new { m.HomeTeam, m.AwayTeam, m.HomeScore, m.AwayScore })
                 .Select(g => g.OrderBy(x => x.Id).First())
@@ -39,6 +41,8 @@ namespace soccer.Controllers
                                 .ToListAsync(),
                 News = await _context.News.ToListAsync()
             };
+
+            
 
             return View(model);
         }

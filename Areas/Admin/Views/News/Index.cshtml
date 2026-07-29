@@ -1,0 +1,58 @@
+@model IEnumerable<soccer.Models.NewsItem>
+@{
+    ViewData["Title"] = "Xeberler";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-file-text mr-2"></i>Xeberler</h1>
+    <div class="page-options d-flex">
+        <a asp-action="Create" class="btn btn-primary"><i class="fe fe-plus mr-1"></i> Yeni Xeber</a>
+    </div>
+</div>
+
+<div class="card">
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fe fe-file-text"></i>
+            <p>Hele hec bir xeber elave edilmeyib.</p>
+            <a asp-action="Create" class="btn btn-primary btn-sm">Ilk xeberi elave et</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Basliq</th>
+                        <th>Tarix</th>
+                        <th class="text-right">Emeliyyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var n in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(n.ImageUrl))
+                            {
+                                <img src="@n.ImageUrl" class="thumb-sm" />
+                            }
+                        </td>
+                        <td>@n.Title</td>
+                        <td>@n.Date.ToString("yyyy-MM-dd")</td>
+                        <td class="text-right">
+                            <a asp-action="Details" asp-route-id="@n.Id" class="btn btn-sm btn-outline-secondary" title="Etrafli"><i class="fe fe-eye"></i></a>
+                            <a asp-action="Edit" asp-route-id="@n.Id" class="btn btn-sm btn-outline-primary" title="Redakte et"><i class="fe fe-edit"></i></a>
+                            <a asp-action="Delete" asp-route-id="@n.Id" class="btn btn-sm btn-outline-danger" title="Sil"><i class="fe fe-trash-2"></i></a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

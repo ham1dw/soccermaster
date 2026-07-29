@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Soccer Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/admin/css/dashboard.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+    <div class="page">
+        <div class="page-single">
+            <div class="container">
+                <div class="row">
+                    <div class="col col-login mx-auto">
+                        <div class="text-center mb-6">
+                            <span class="h2"><i class="fe fe-shield mr-2 text-primary"></i><strong>Soccer Admin</strong></span>
+                        </div>
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+@model IEnumerable<soccer.Models.Match>
+@{
+    ViewData["Title"] = "Matclar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-check-square mr-2"></i>Matclar</h1>
+    <div class="page-options d-flex">
+        <a asp-action="Create" class="btn btn-primary"><i class="fe fe-plus mr-1"></i> Yeni Matc</a>
+    </div>
+</div>
+
+<div class="card">
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fe fe-check-square"></i>
+            <p>Hele hec bir matc elave edilmeyib.</p>
+            <a asp-action="Create" class="btn btn-primary btn-sm">Ilk matci elave et</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter table-striped">
+                <thead>
+                    <tr>
+                        <th class="w-1">#</th>
+                        <th>Ev sahibi</th>
+                        <th>Hesab</th>
+                        <th>Qonaq</th>
+                        <th class="text-right">Emeliyyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td class="text-muted">@m.Id</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(m.Team1LogoUrl))
+                            {
+                                <img src="@m.Team1LogoUrl" class="thumb-sm mr-2" />
+                            }
+                            @m.HomeTeam
+                        </td>
+                        <td><span class="badge badge-primary">@m.HomeScore - @m.AwayScore</span></td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(m.Team2LogoUrl))
+                            {
+                                <img src="@m.Team2LogoUrl" class="thumb-sm mr-2" />
+                            }
+                            @m.AwayTeam
+                        </td>
+                        <td class="text-right">
+                            <a asp-action="Details" asp-route-id="@m.Id" class="btn btn-sm btn-outline-secondary" title="Etrafli"><i class="fe fe-eye"></i></a>
+                            <a asp-action="Edit" asp-route-id="@m.Id" class="btn btn-sm btn-outline-primary" title="Redakte et"><i class="fe fe-edit"></i></a>
+                            <a asp-action="Delete" asp-route-id="@m.Id" class="btn btn-sm btn-outline-danger" title="Sil"><i class="fe fe-trash-2"></i></a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,89 @@
+@model soccer.Models.NewsItem
+@using Microsoft.AspNetCore.Antiforgery
+@inject IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Xeberi Redakte Et";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-file-text mr-2"></i>Xeberi Redakte Et</h1>
+</div>
+
+<div class="card">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="form-label"></label>
+                <textarea asp-for="Content" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Sekil</label>
+                        <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl" class="thumb-sm mt-2" style="width:80px;height:80px;" />
+                        }
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Author" class="form-label"></label>
+                        <input asp-for="Author" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Date" class="form-label"></label>
+                        <input asp-for="Date" type="date" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <a asp-action="Index" class="btn btn-outline-secondary">Legv et</a>
+            <button type="submit" class="btn btn-primary">Yadda saxla</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    (function(){
+        var token = '@Antiforgery.GetAndStoreTokens(ViewContext.HttpContext).RequestToken';
+        tinymce.init({
+            selector: 'textarea[name="Content"]',
+            height: 400,
+            plugins: 'image media link code lists table paste',
+            toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | table | link image media | code',
+            images_upload_handler: function (blobInfo, success, failure) {
+                var formData = new FormData();
+                var blob = blobInfo.blob();
+                formData.append('file', blob, blobInfo.filename());
+
+                fetch('@Url.Action("UploadImage","News", new { area = "Admin" })', {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': token
+                    },
+                    body: formData
+                }).then(function (res) { return res.json(); })
+                .then(function (json) {
+                    if (json && json.location) success(json.location);
+                    else failure('Upload failed');
+                }).catch(function (err) { failure('HTTP Error: ' + err.message); });
+            }
+        });
+    })();
+</script>
+}

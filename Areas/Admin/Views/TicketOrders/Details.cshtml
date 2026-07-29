@@ -1,0 +1,42 @@
+@model soccer.Models.TicketOrder
+@{
+    ViewData["Title"] = "Sifaris Detallari";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-tag mr-2"></i>Sifaris Detallari #@Model.Id</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-3">Matc</dt>
+            <dd class="col-9">@Model.MatchName</dd>
+            <dt class="col-3">Kateqoriya</dt>
+            <dd class="col-9">@Model.Category</dd>
+            <dt class="col-3">Alici</dt>
+            <dd class="col-9">@Model.FullName</dd>
+            <dt class="col-3">Bilet sayi</dt>
+            <dd class="col-9">@Model.TicketCount</dd>
+            <dt class="col-3">Umumi mebleg</dt>
+            <dd class="col-9">@Model.TotalAmount AZN</dd>
+            <dt class="col-3">Status</dt>
+            <dd class="col-9">
+                @if (Model.IsPaid)
+                {
+                    <span class="status-icon bg-success"></span> <text>Odenilib</text>
+                }
+                else
+                {
+                    <span class="status-icon bg-warning"></span> <text>Gozlemede</text>
+                }
+            </dd>
+            <dt class="col-3">Tarix</dt>
+            <dd class="col-9">@Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-right">
+        <a asp-action="Index" class="btn btn-outline-secondary">Geri</a>
+    </div>
+</div>

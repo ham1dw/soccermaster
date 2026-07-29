@@ -1,0 +1,38 @@
+@model soccer.Models.Player
+@{
+    ViewData["Title"] = "Oyuncu Detallari";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-users mr-2"></i>Oyuncu Detallari</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center mb-4">
+            <div class="col-auto">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" style="width:90px;height:90px;object-fit:cover;border-radius:8px;" />
+                }
+            </div>
+            <div class="col">
+                <h3 class="mb-0">@Model.Name</h3>
+                <span class="text-muted">@Model.TeamName &middot; #@Model.Number &middot; @Model.Position</span>
+            </div>
+        </div>
+        <dl class="row">
+            <dt class="col-3">Reytinq</dt>
+            <dd class="col-9">@Model.Rating</dd>
+            <dt class="col-3">Heftelik qol / asist</dt>
+            <dd class="col-9">@Model.WeeklyGoals / @Model.WeeklyAssists</dd>
+            <dt class="col-3">Umumi qol / asist</dt>
+            <dd class="col-9">@Model.TotalGoals / @Model.TotalAssists</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-right">
+        <a asp-action="Index" class="btn btn-outline-secondary">Geri</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Redakte et</a>
+    </div>
+</div>

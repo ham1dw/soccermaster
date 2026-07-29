@@ -1,0 +1,52 @@
+@model IEnumerable<soccer.Models.UpcomingMatch>
+@{
+    ViewData["Title"] = "Novbeti Matclar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-calendar mr-2"></i>Novbeti Matclar</h1>
+    <div class="page-options d-flex">
+        <a asp-action="Create" class="btn btn-primary"><i class="fe fe-plus mr-1"></i> Yeni</a>
+    </div>
+</div>
+
+<div class="card">
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fe fe-calendar"></i>
+            <p>Novbeti matc planlasdirilmayib.</p>
+            <a asp-action="Create" class="btn btn-primary btn-sm">Ilk matci elave et</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter table-striped">
+                <thead>
+                    <tr>
+                        <th>Komandalar</th>
+                        <th>Tarix</th>
+                        <th>Liqa</th>
+                        <th class="text-right">Emeliyyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td>@m.Team1 <span class="text-muted">vs</span> @m.Team2</td>
+                        <td>@m.Date.ToString("yyyy-MM-dd")</td>
+                        <td><span class="badge badge-secondary">@m.League</span></td>
+                        <td class="text-right">
+                            <a asp-action="Edit" asp-route-id="@m.id" class="btn btn-sm btn-outline-primary" title="Redakte et"><i class="fe fe-edit"></i></a>
+                            <a asp-action="Delete" asp-route-id="@m.id" class="btn btn-sm btn-outline-danger" title="Sil"><i class="fe fe-trash-2"></i></a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,104 @@
+@model IEnumerable<soccer.Models.TicketOrder>
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title">Idareetme Paneli</h1>
+</div>
+
+<div class="row row-cards">
+    <div class="col-6 col-sm-4 col-lg-3">
+        <div class="card">
+            <div class="card-body p-3 text-center">
+                <div class="text-green"><i class="fe fe-tag" style="font-size:24px;"></i></div>
+                <div class="h1 m-0">@ViewBag.TotalTickets</div>
+                <div class="text-muted mb-1">Satilan Biletler</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-sm-4 col-lg-3">
+        <div class="card">
+            <div class="card-body p-3 text-center">
+                <div class="text-blue"><i class="fe fe-file-text" style="font-size:24px;"></i></div>
+                <div class="h1 m-0">@ViewBag.TotalBlogs</div>
+                <div class="text-muted mb-1">Bloq Yazilari</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-sm-4 col-lg-3">
+        <div class="card">
+            <div class="card-body p-3 text-center">
+                <div class="text-yellow"><i class="fe fe-users" style="font-size:24px;"></i></div>
+                <div class="h1 m-0">@ViewBag.TotalUsers</div>
+                <div class="text-muted mb-1">Aktiv Istifadeciler</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-sm-4 col-lg-3">
+        <div class="card">
+            <div class="card-body p-3 text-center">
+                <div class="text-green"><i class="fe fe-dollar-sign" style="font-size:24px;"></i></div>
+                <div class="h1 m-0">@ViewBag.TotalRevenue AZN</div>
+                <div class="text-muted mb-1">Umumi Gelir</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row row-cards mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title">Son Bilet Sifarisleri</h3>
+                <a asp-area="Admin" asp-controller="TicketOrders" asp-action="Index" class="btn btn-sm btn-outline-primary">Hamisina bax</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th class="w-1">No.</th>
+                            <th>Abonent / Alici</th>
+                            <th>Oyun (Match)</th>
+                            <th>Tarix</th>
+                            <th>Status</th>
+                            <th>Mebleg</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Hele hec bir bilet sifarisi yoxdur.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var t in Model)
+                        {
+                            <tr>
+                                <td><span class="text-muted">#@t.Id.ToString("D5")</span></td>
+                                <td>@t.FullName</td>
+                                <td>@t.MatchName</td>
+                                <td>@t.CreatedAt.ToString("dd MMMM yyyy")</td>
+                                <td>
+                                    @if (t.IsPaid)
+                                    {
+                                        <span class="status-icon bg-success"></span> <text>Odenildi</text>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-icon bg-warning"></span> <text>Gozlemede</text>
+                                    }
+                                </td>
+                                <td>@t.TotalAmount AZN</td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

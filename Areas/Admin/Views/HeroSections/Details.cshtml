@@ -1,0 +1,28 @@
+@model soccer.Models.HeroSection
+@{
+    ViewData["Title"] = "Hero Bolme Detallari";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-image mr-2"></i>Hero Bolme Detallari</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Model.BackgroundImage))
+        {
+            <img src="@Model.BackgroundImage" class="img-fluid rounded mb-3" style="max-height:260px;object-fit:cover;" />
+        }
+        <dl class="row">
+            <dt class="col-3">Basliq</dt>
+            <dd class="col-9">@Model.Title</dd>
+            <dt class="col-3">Tesvir</dt>
+            <dd class="col-9">@Model.Description</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-right">
+        <a asp-action="Index" class="btn btn-outline-secondary">Geri</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Redakte et</a>
+    </div>
+</div>

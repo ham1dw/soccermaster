@@ -12,6 +12,7 @@
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public string Content { get; set; }
         public string ImageUrl { get; set; }
         public string Author { get; set; }
         public DateTime Date { get; set; }
@@ -37,6 +38,11 @@
         public string Team2 { get; set; }
         public DateTime MatchDate { get; set; }
         public string Location { get; set; }
+        public string League { get; set; }
+
+        public string Team1LogoUrl { get; set; }
+        public string Team2LogoUrl { get; set; }
+
     }
 
     public class HomeViewModel
@@ -47,5 +53,20 @@
         public NextMatch? NextMatch { get; set; }
         public List<Match>? Matches { get; set; }
         public Match? LastMatch { get; set; }
+    }
+
+    public class UpcomingMatch
+    {
+        public int id { get; set; }
+        public string Team1 { get; set; }
+        public string Team2 { get; set; }
+        public DateTime Date { get; set; }
+        public string Location { get; set; }
+        public string League { get; set; }
+
+        public string Team1LogoUrl { get; set; }
+
+        public string Team2LogoUrl { get; set; }
+
     }
 }

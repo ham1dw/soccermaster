@@ -1,0 +1,69 @@
+@model IEnumerable<soccer.Models.AppUser>
+@{
+    ViewData["Title"] = "Istifadeciler";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var adminIds = ViewBag.AdminIds as List<string> ?? new List<string>();
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-user mr-2"></i>Istifadeciler</h1>
+</div>
+
+<div class="card">
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fe fe-user"></i>
+            <p>Hec bir istifadeci tapilmadi.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th class="text-right">Emeliyyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var u in Model)
+                    {
+                        bool isAdmin = adminIds.Contains(u.Id);
+                        <tr>
+                            <td><span class="avatar">@(string.IsNullOrEmpty(u.Email) ? "?" : u.Email.Substring(0, 1).ToUpper())</span></td>
+                            <td>@u.Email</td>
+                            <td>
+                                @if (isAdmin)
+                                {
+                                    <span class="badge badge-success">Admin</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-secondary">Istifadeci</span>
+                                }
+                            </td>
+                            <td class="text-right">
+                                @if (isAdmin)
+                                {
+                                    <a asp-action="RemoveAdmin" asp-route-id="@u.Id" class="btn btn-sm btn-outline-danger">
+                                        <i class="fe fe-shield-off mr-1"></i> Adminden cixar
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-action="MakeAdmin" asp-route-id="@u.Id" class="btn btn-sm btn-outline-primary">
+                                        <i class="fe fe-shield mr-1"></i> Admin et
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

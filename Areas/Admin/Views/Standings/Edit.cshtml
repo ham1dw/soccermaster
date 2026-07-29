@@ -1,0 +1,60 @@
+@model soccer.Models.Standing
+@{
+    ViewData["Title"] = "Cedvel Setrini Redakte Et";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-bar-chart-2 mr-2"></i>Cedvel Setrini Redakte Et</h1>
+</div>
+
+<div class="card">
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="TeamName" class="form-label"></label>
+                        <input asp-for="TeamName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Position" class="form-label"></label>
+                        <input asp-for="Position" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="W" class="form-label"></label>
+                                <input asp-for="W" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="D" class="form-label"></label>
+                                <input asp-for="D" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="L" class="form-label"></label>
+                                <input asp-for="L" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Points" class="form-label"></label>
+                        <input asp-for="Points" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <a asp-action="Index" class="btn btn-outline-secondary">Legv et</a>
+            <button type="submit" class="btn btn-primary">Yadda saxla</button>
+        </div>
+    </form>
+</div>

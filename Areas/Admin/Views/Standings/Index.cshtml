@@ -1,0 +1,58 @@
+@model IEnumerable<soccer.Models.Standing>
+@{
+    ViewData["Title"] = "Turnir Cedveli";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title"><i class="fe fe-bar-chart-2 mr-2"></i>Turnir Cedveli</h1>
+    <div class="page-options d-flex">
+        <a asp-action="Create" class="btn btn-primary"><i class="fe fe-plus mr-1"></i> Yeni Setir</a>
+    </div>
+</div>
+
+<div class="card">
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fe fe-bar-chart-2"></i>
+            <p>Hele turnir cedveli melumati yoxdur.</p>
+            <a asp-action="Create" class="btn btn-primary btn-sm">Ilk setri elave et</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter table-striped">
+                <thead>
+                    <tr>
+                        <th class="w-1">Yer</th>
+                        <th>Komanda</th>
+                        <th>Q</th>
+                        <th>M</th>
+                        <th>M</th>
+                        <th>Xal</th>
+                        <th class="text-right">Emeliyyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var s in Model)
+                {
+                    <tr>
+                        <td><span class="badge badge-outline badge-primary">@s.Position</span></td>
+                        <td>@s.TeamName</td>
+                        <td>@s.W</td>
+                        <td>@s.D</td>
+                        <td>@s.L</td>
+                        <td><strong>@s.Points</strong></td>
+                        <td class="text-right">
+                            <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary" title="Redakte et"><i class="fe fe-edit"></i></a>
+                            <a asp-action="Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger" title="Sil"><i class="fe fe-trash-2"></i></a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

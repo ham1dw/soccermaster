@@ -4,19 +4,109 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- HERO -->
-<div class="hero overlay" style="background-image: url('~/images/bg_3.jpg');">
-    <div class="container">
-        <div class="row align-items-center">
+<!-- HERO SECTION -->
+<div class="hero overlay" style="background-image: url('/images/blog4k.jpg'); min-height: 220px; height: 30vh; max-height: 350px; padding: 30px 0;">
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
             <div class="col-lg-5 mx-auto text-center">
-                <h1 class="text-white">Blog</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, molestias repudiandae pariatur.</p>
+                <h1 class="text-white">Blog & Tickets</h1>
+                <p>Stay updated with the latest news, match insights, and book your tickets.</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- BLOG POSTS -->
+<!-- TICKET BOOKING & PAYMENT SECTION -->
+<div id="ticket-section" class="site-section bg-dark py-5" style="border-bottom: 1px solid #2a323d;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="p-4 p-md-5 rounded shadow-sm" style="background-color: #1e2429; border: 1px solid #2a323d;">
+                    <div class="title-section text-center mb-4">
+                        <h2 class="heading text-white" style="text-transform: uppercase; letter-spacing: 1px;">Book Your Match Ticket</h2>
+                        <p class="text-muted">Asagidaki xanalardan oyunu secib biletinizi sifaris edin.</p>
+                    </div>
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success text-center mb-4">@TempData["SuccessMessage"]</div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger text-center mb-4">@TempData["ErrorMessage"]</div>
+                    }
+
+                    <form asp-controller="Blog" asp-action="BookTicket" method="post">
+                        <div class="row">
+                            <!-- Oyun Secimi -->
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="text-white small fw-bold">Oyun Secin</label>
+                                <select name="MatchName" class="form-control text-white" style="background: #14181c; border: 1px solid #333; height: 45px;" required>
+                                    <option value="">Oyun secin...</option>
+                                    <option value="Galatasaray vs Fenerbahce">Galatasaray vs Fenerbahce</option>
+                                    <option value="Barcelona vs Real Madrid">Barcelona vs Real Madrid</option>
+                                    <option value="Qarabag vs Neftci">Qarabag vs Neftci</option>
+                                </select>
+                            </div>
+
+                            <!-- Bilet Kateqoriyasi -->
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="text-white small fw-bold">Bilet Kateqoriyasi</label>
+                                <select name="Category" class="form-control text-white" style="background: #14181c; border: 1px solid #333; height: 45px;" required>
+                                    <option value="Standard">Standart Tribuna (10 AZN)</option>
+                                    <option value="Fan Zone">Fan Zonu (20 AZN)</option>
+                                    <option value="VIP">VIP Zona (50 AZN)</option>
+                                </select>
+                            </div>
+
+                            <!-- Ad Soyad -->
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="text-white small fw-bold">Adiniz ve Soyadiniz</label>
+                                <input type="text" name="FullName" class="form-control text-white" placeholder="Mes: Eli Eliyev" style="background: #14181c; border: 1px solid #333; height: 45px;" required>
+                            </div>
+
+                            <!-- Bilet Sayi -->
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="text-white small fw-bold">Bilet Sayi</label>
+                                <input type="number" name="TicketCount" min="1" max="10" value="1" class="form-control text-white" style="background: #14181c; border: 1px solid #333; height: 45px;" required>
+                            </div>
+
+                            <!-- FAKE ODENIS (KART) SAHELERI -->
+                            <div class="col-12 mt-3 mb-2">
+                                <hr style="border-top: 1px solid #2a323d;">
+                                <h5 class="text-white mb-3" style="font-size: 16px;">Odenis Melumatlari</h5>
+                            </div>
+
+                            <div class="col-md-12 form-group mb-3">
+                                <label class="text-white small fw-bold">Kart Nomresi</label>
+                                <input type="text" name="CardNumber" placeholder="1234 5678 9101 1121" class="form-control text-white" style="background: #14181c; border: 1px solid #333; height: 45px;" required />
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="text-white small fw-bold">Bitme Tarixi (MM/YY)</label>
+                                <input type="text" name="ExpiryDate" placeholder="12/26" class="form-control text-white" style="background: #14181c; border: 1px solid #333; height: 45px;" required />
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="text-white small fw-bold">CVV</label>
+                                <input type="password" name="CVV" placeholder="123" maxlength="3" class="form-control text-white" style="background: #14181c; border: 1px solid #333; height: 45px;" required />
+                            </div>
+
+                            <!-- Duyme -->
+                            <div class="col-12 form-group mt-3 text-center">
+                                <button type="submit" class="btn px-5 py-3 font-weight-bold text-white" style="background-color: #e62222; border: none; border-radius: 4px; letter-spacing: 1px;">
+                                    CONFIRM & PAY TICKET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LATEST NEWS (XEBERLER BOLMESI) -->
 <div class="container site-section">
     <div class="row">
         <div class="col-6 title-section">
@@ -51,3 +141,4 @@
             </div>
         }
     </div>
+</div>

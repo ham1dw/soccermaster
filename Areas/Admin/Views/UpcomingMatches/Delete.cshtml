@@ -1,0 +1,32 @@
+@model soccer.Models.UpcomingMatch
+@{
+    ViewData["Title"] = "Novbeti Matci Sil";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title text-danger"><i class="fe fe-alert-triangle mr-2"></i>Novbeti Matci Sil</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <p class="text-muted">Bu matci silmek istediyinize eminsiniz? Bu emeliyyat geri qaytarila bilmez.</p>
+        <dl class="row">
+            <dt class="col-3">Komandalar</dt>
+            <dd class="col-9">@Model.Team1 vs @Model.Team2</dd>
+            <dt class="col-3">Tarix</dt>
+            <dd class="col-9">@Model.Date.ToString("yyyy-MM-dd")</dd>
+            <dt class="col-3">Yer</dt>
+            <dd class="col-9">@Model.Location</dd>
+            <dt class="col-3">Liqa</dt>
+            <dd class="col-9">@Model.League</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-right">
+        <form asp-action="Delete" method="post" class="d-inline">
+            <input type="hidden" asp-for="id" />
+            <a asp-action="Index" class="btn btn-outline-secondary">Legv et</a>
+            <button type="submit" class="btn btn-danger">Beli, sil</button>
+        </form>
+    </div>
+</div>

@@ -10,6 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Areas\**" />
+    <Content Remove="wwwroot\Areas\**" />
+    <EmbeddedResource Remove="wwwroot\Areas\**" />
+    <None Remove="wwwroot\Areas\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Shared\_ViewImports.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\css\.DS_Store" />
     <None Include="wwwroot\fonts\.DS_Store" />
     <None Include="wwwroot\images\.DS_Store" />
@@ -18,15 +29,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9">
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.87.0" />
     <PackageReference Include="Microsoft.SqlServer.Server" Version="1.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\ViewsModel\" />
   </ItemGroup>
 
 </Project>
